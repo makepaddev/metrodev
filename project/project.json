@@ -27,8 +27,7 @@
                 "activeTab":1,
                 "tabs":[
                     {"type":"Log", "uid":"Editors" ,"title":"Editors"},
-                    {"type":"CodeEditor", "uid":"Edit/project/app.js", "file":"/project/app.js", "title":"app.js"},
-                    {"type":"CodeEditor", "uid":"Edit/project/appmodule.js", "file":"/project/appmodule.js", "title":"appmodule.js"}
+                    {"type":"CodeEditor", "uid":"Edit/project/app.js", "file":"/project/app.js", "title":"app.js"}
                ]
             },
             "pane2":{
