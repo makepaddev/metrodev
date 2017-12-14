@@ -1,6 +1,7 @@
 {
     "type":"Splitter",
-    "vertical":true, "pos":0.25,
+    "vertical":true, "pos":125,
+    "toggle":true,
     "pane1":{"type":"Tabs",
         "tabs":[
             {"type":"Tree", "data":{
@@ -17,6 +18,7 @@
     },
     "pane2":{"type":"Splitter", 
         "vertical":false, "pos":0.9,
+        "toggle":true,
         "pane1":{
             "type":"Splitter", 
             "vertical":true,
