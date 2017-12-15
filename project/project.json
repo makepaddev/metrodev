@@ -1,7 +1,7 @@
 {
     "type":"Splitter",
     "vertical":true, "pos":125,
-    "toggle":true,
+    "foldable":true,
     "pane1":{"type":"Tabs",
         "tabs":[
             {"type":"Tree", "data":{
@@ -17,8 +17,8 @@
         ]
     },
     "pane2":{"type":"Splitter", 
-        "vertical":false, "pos":0.9,
-        "toggle":true,
+        "vertical":false, "pos":-120,
+        "foldable":true,
         "pane1":{
             "type":"Splitter", 
             "vertical":true,
