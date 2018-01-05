@@ -23,7 +23,7 @@
         }
         dock.addTab(
             "editors",
-            {type:'Editor', uid:'Edit'+file, file:file, title:file.slice(file.lastIndexOf('/')+1)}
+            {type:'CodeEditor', uid:'Edit'+file, file:file, title:file.slice(file.lastIndexOf('/')+1)}
         )
         //console.log("OPEN FILE", file)
     }

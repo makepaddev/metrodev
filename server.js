@@ -41,7 +41,7 @@ var filesWatched = []
 var fileStats = {}
 var watchRequests = []
 
-function doWatcher(){	
+function doWatcher(){
 	var fileProms = []
 	for(var i = 0; i < filesWatched.length; i++){
 		var resolve, reject
