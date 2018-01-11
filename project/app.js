@@ -14,7 +14,7 @@ for(var x = 0; x < w; x++){
 		var r = x * 1
 		var g = y * 1
 		var b = Math.abs(x + y)
-		c.fillStyle = 'hsla(208,77%,51%,0.67)'
+		c.fillStyle = 'hsla(75,74%,54%)'
 		c.fillRect(x,y,1,1)
 	}
 }
