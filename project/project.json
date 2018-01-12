@@ -4,7 +4,7 @@
     "foldable":true,
     "pane1":{"type":"Tabs",
         "tabs":[
-            {"type":"Tree", "data":{
+            {"type":"FileTree", "data":{
 				"name":"/",
 				"open":true,
 				"folder":[

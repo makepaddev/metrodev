@@ -54,8 +54,17 @@
         }
     }
 
+    onAddFile(){
+        this.openModal({
+            type:'FileNewDialog'
+        })
+    }
+
     properties() {
         this.dependencies = {
+            'FileNewDialog':require('../lib/HtmlFileNewDialog').extend({
+
+            }),
             'Dock': require('../lib/HtmlDock').extend({
             }),
             'Preview':require('../lib/HtmlPreview').extend({
@@ -115,7 +124,19 @@
             'Log': require('../lib/HtmlLog').extend({
                 
             }),
-            'Tree': require('../lib/HtmlTree').extend({
+            'FileTree': require('../lib/HtmlFileTree').extend({
+                onRenameFile(){
+
+                },
+
+                onDeleteFile(){
+
+                },
+
+                onAddFile(){
+                    this.app.onAddFile()
+                },
+
                 onSelect(node, path){
                     var str = ''
                     for(var i = 0; i < path.length; i++){
