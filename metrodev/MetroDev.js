@@ -55,9 +55,9 @@
     }
 
     onAddFile(){
-        this.openModal({
-            type:'FileNewDialog'
-        })
+        // ok so how do we do this
+        var fileDialog = new this.FileNewDialog()
+        this.openModal(fileDialog)
     }
 
     properties() {
