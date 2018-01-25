@@ -14,7 +14,14 @@
         })
     }
 
-    onOpenEditor(file){
+    onOpenEditor(path, template){
+        var file = ''
+        for(var i = 0; i < path.length; i++){
+            var seg = path[i].name
+            if(file.length && file[file.length - 1] !== '/') file += '/'
+            file += seg
+        }
+
         var dock = this.childWidgetByType('Dock')
         // lets see if we already have this uid
         if(dock.hasUid('Edit' + file)){
@@ -23,7 +30,7 @@
         }
         dock.addTab(
             "editors",
-            {type:'CodeEditor', uid:'Edit'+file, file:file, title:file.slice(file.lastIndexOf('/')+1)}
+            {type:'CodeEditor', uid:'Edit'+file, template:template, file:file, title:file.slice(file.lastIndexOf('/')+1)}
         )
         //console.log("OPEN FILE", file)
     }
@@ -57,6 +64,17 @@
     onAddFile(){
         // ok so how do we do this
         var fileDialog = new this.FileNewDialog()
+        fileDialog.onNewFile = (template, name)=>{
+            // current filetree thing
+            var fileTree =  this.childWidgetByType('Dock').findWidgetsByUid('filetree')[0]
+            var newNode = {
+                name:name
+            }
+            var refNode = fileTree.addUniqueAtSelection(newNode)
+            var path = fileTree.findPath(refNode)
+            // lets open the file but from template and trigger save
+            this.onOpenEditor(path, refNode == newNode?template.value:undefined)
+        }
         this.openModal(fileDialog)
     }
 
@@ -138,14 +156,9 @@
                 },
 
                 onSelect(node, path){
-                    var str = ''
-                    for(var i = 0; i < path.length; i++){
-                        var seg = path[i].name
-                        if(str.length && str[str.length - 1] !== '/') str += '/'
-                        str += seg
-                    }
+
                     // ok now we have to open a new editor for file str.
-                    this.app.onOpenEditor(str)
+                    this.app.onOpenEditor(path)
                     return true
                 }
             })
