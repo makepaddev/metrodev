@@ -15,12 +15,8 @@
     }
 
     onOpenEditor(path, template){
-        var file = ''
-        for(var i = 0; i < path.length; i++){
-            var seg = path[i].name
-            if(file.length && file[file.length - 1] !== '/') file += '/'
-            file += seg
-        }
+        var file = this.FileTree.prototype.Tree.pathArrayToString(path)
+
 
         var dock = this.childWidgetByType('Dock')
         // lets see if we already have this uid
@@ -63,25 +59,60 @@
 
     onAddFile(){
         // ok so how do we do this
-        var fileDialog = new this.FileNewDialog()
-        fileDialog.onNewFile = (template, name)=>{
+        var fileNewDialog = new this.FileNewDialog()
+        fileNewDialog.onNewFile = (template, name)=>{
             // current filetree thing
             var fileTree =  this.childWidgetByType('Dock').findWidgetsByUid('filetree')[0]
             var newNode = {
-                name:name
+                name:name + template.extension
             }
+            if(template.isFolder) newNode.folder = []
             var refNode = fileTree.addUniqueAtSelection(newNode)
             var path = fileTree.findPath(refNode)
             // lets open the file but from template and trigger save
-            this.onOpenEditor(path, refNode == newNode?template.value:undefined)
+            if(!template.isFolder) this.onOpenEditor(path, refNode == newNode?template.value:undefined)
         }
-        this.openModal(fileDialog)
+        this.openModal(fileNewDialog)
+    }
+
+    onRenameFile(){
+        // ok so how do we do this
+        var fileTree =  this.childWidgetByType('Dock').findWidgetsByUid('filetree')[0]
+        var pathToRename = fileTree.getSelectionPath()
+        if(pathToRename.length == 1) return
+        var fileRenameDialog = new this.FileRenameDialog(null, {
+            fileData:fileTree.data,
+            pathToRename:pathToRename
+        })
+        fileRenameDialog.onRenameFile = newPath=>{
+            console.log("TODO implement on backend")
+        }
+        this.openModal(fileRenameDialog)
+    }
+
+    onDeleteFile(){
+        var fileTree =  this.childWidgetByType('Dock').findWidgetsByUid('filetree')[0]
+        var pathToDelete = fileTree.getSelectionPath()
+        if(pathToDelete.length == 1) return
+        var filePathString = this.FileTree.prototype.Tree.pathArrayToString(pathToDelete)
+        var alertDialog = new this.AlertDialog(null, {
+            body:filePathString,
+        })
+        alertDialog.onOk = _=>{
+            // update filetree, and close any editors with the file.
+            console.log("TODO implement on backend")
+        }
+        this.openModal(alertDialog)
     }
 
     properties() {
         this.dependencies = {
             'FileNewDialog':require('../lib/HtmlFileNewDialog').extend({
-
+            }),
+            'FileRenameDialog':require('../lib/HtmlFileRenameDialog').extend({
+            }),
+            'AlertDialog':require('../lib/HtmlAlertDialog').extend({
+                title:'Do you want to delete',
             }),
             'Dock': require('../lib/HtmlDock').extend({
             }),
@@ -144,11 +175,11 @@
             }),
             'FileTree': require('../lib/HtmlFileTree').extend({
                 onRenameFile(){
-
+                    this.app.onRenameFile()
                 },
 
                 onDeleteFile(){
-
+                    this.app.onDeleteFile()
                 },
 
                 onAddFile(){
